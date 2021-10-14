@@ -3,21 +3,23 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 10
+      nodejs: 12
+   
     commands:
-      - echo Installing app dependencies...
-      - npm install
+        # install npm
+        - npm install
+       
   build:
     commands:
-      - echo Building static site...
-      - npm build
-
+        # run build script
+        - npm run-script build
+     
 artifacts:
-  type: zip
-  paths:
-    - './build/**/*'
-    - './cicd/**/*'
-
-cache:
-  paths:
-    - './node_modules/**/*'
+  # include all files required to run application
+  # notably excluded is node_modules, as this will cause overwrite error on deploy
+  files:
+    - public/**/*
+    - src/**/*
+    - package.json
+    - appspec.yml
+    - scripts/**/*
